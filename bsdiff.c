@@ -28,6 +28,13 @@
 __FBSDID("$FreeBSD: src/usr.bin/bsdiff/bsdiff/bsdiff.c,v 1.1 2005/08/06 01:59:05 cperciva Exp $");
 #endif
 
+#if __linux__
+#include <linux/version.h>
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,22)
+#define _MAP_POPULATE_AVAILABLE
+#endif
+#endif
+
 #include <sys/types.h>
 
 #include <bzlib.h>
@@ -239,7 +246,12 @@ int main(int argc,char *argv[])
 	if (oldsize > t_off_max)
 		err(1, "file too large %s", argv[1]);
 
-	old = mmap(NULL, oldsize, PROT_READ, MAP_SHARED | MAP_POPULATE, fd, 0);
+	#ifdef _MAP_POPULATE_AVAILABLE
+		old = mmap(NULL, oldsize, PROT_READ, MAP_SHARED | MAP_POPULATE, fd, 0);
+	#else
+		old = mmap(NULL, oldsize, PROT_READ, MAP_SHARED, fd, 0);
+	#endif
+
 	if (old == MAP_FAILED)
 		err(1, "mmap() %s", argv[1]);
 	close(fd);
@@ -262,7 +274,12 @@ int main(int argc,char *argv[])
 	if (newsize > t_off_max)
 		err(1, "file too large %s", argv[2]);
 
-	new = mmap(NULL, newsize, PROT_READ, MAP_SHARED | MAP_POPULATE, fd, 0);
+	#ifdef _MAP_POPULATE_AVAILABLE
+		new = mmap(NULL, newsize, PROT_READ, MAP_SHARED | MAP_POPULATE, fd, 0);
+	#else
+		new = mmap(NULL, newsize, PROT_READ, MAP_SHARED, fd, 0);
+	#endif
+	
 	if (new == MAP_FAILED)
 		err(1, "mmap %s", argv[2]);
 	close(fd);
