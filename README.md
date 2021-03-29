@@ -17,6 +17,9 @@ Repo maintainer: [Sayem Shafayet](https://github.com/iShafayet)
 ## Compiling
 
 **Linux**: Kernel 2.6.23 or above is required.
+**MacOS**: Build error regarding u_char not supported.
+**BSD**: Not tested yet. But should work fine as it was the original target.
+**Windows**: Not tested yet.
 
 You will need a c compiler. Following is an example for Amazon Linux 2.
 
