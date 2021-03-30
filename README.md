@@ -16,12 +16,12 @@ Repo maintainer: [Sayem Shafayet](https://github.com/iShafayet)
 
 ## Compiling
 
-**Linux**: Kernel 2.6.23 or above is required.
-**MacOS**: Build error regarding u_char not supported.
-**BSD**: Not tested yet. But should work fine as it was the original target.
+**Linux**: Kernel 2.6.23 or above is required. <br>
+**MacOS**: Build error regarding `u_char`/`<uchar.h>` not supported. <br>
+**BSD**: Not tested, but should work as expected as it was the original target. <br>
 **Windows**: Not tested yet.
 
-You will need a c compiler. Following is an example for Amazon Linux 2.
+You will need a C compiler. Following is an example with `gcc` for Amazon Linux 2.
 
 ```sh
 sudo yum groupinstall "Development Tools"
